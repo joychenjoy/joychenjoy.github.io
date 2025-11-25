@@ -6,7 +6,7 @@
 </head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpeedCloud 速度雲</title>
+    <title>SpeedCloud 速度雲 - 專業 Minecraft 伺服器託管</title>
     <style>
         * {
             margin: 0;
@@ -226,8 +226,33 @@
             line-height: 1.2;
         }
 
-        .hero-text p {
+        .hero-quote-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0a192f;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .hero-quote-badge::before {
+            content: '⚡';
             font-size: 1.2rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
             color: #8892b0;
             margin-bottom: 2rem;
             line-height: 1.6;
@@ -289,7 +314,7 @@
             50% { transform: scale(1.05); }
         }
 
-        /* 特色區 - 卡片輪播 */
+        /* 特色區 - 標準卡片輪播 */
         .features {
             padding: 5rem 5%;
             background: rgba(17, 34, 64, 0.5);
@@ -316,31 +341,47 @@
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
-            overflow: hidden;
             padding: 2rem 0;
         }
 
         .carousel-wrapper {
             display: flex;
-            transition: transform 0.5s ease;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            position: relative;
         }
 
         .feature-card {
-            min-width: 100%;
+            position: absolute;
+            width: 90%;
+            max-width: 600px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 24px;
             padding: 3rem;
             backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .feature-card.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            z-index: 10;
         }
 
         .feature-card:hover {
             border-color: #3b82f6;
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
         }
 
         .feature-icon {
@@ -365,27 +406,35 @@
             justify-content: center;
             align-items: center;
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            z-index: 20;
+            position: relative;
         }
 
         .carousel-btn {
             background: rgba(59, 130, 246, 0.2);
             border: 2px solid rgba(59, 130, 246, 0.5);
             color: #3b82f6;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
         }
 
         .carousel-btn:hover {
             background: rgba(59, 130, 246, 0.4);
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .carousel-btn:active {
+            transform: scale(1.05);
         }
 
         .carousel-dots {
@@ -618,6 +667,20 @@
         }
 
         /* 響應式設計 */
+        @media (max-width: 1024px) {
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .carousel-wrapper {
+                min-height: 450px;
+            }
+
+            .feature-card {
+                padding: 2.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -628,6 +691,15 @@
                 font-size: 2.5rem;
             }
 
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .hero-quote-badge {
+                font-size: 0.85rem;
+                padding: 0.6rem 1.2rem;
+            }
+
             .nav-links {
                 display: none;
             }
@@ -636,16 +708,161 @@
                 flex-direction: column;
             }
 
+            .btn {
+                width: 100%;
+            }
+
+            .carousel-wrapper {
+                min-height: 400px;
+            }
+
             .feature-card {
+                width: 95%;
                 padding: 2rem;
             }
 
             .feature-icon {
-                font-size: 3.5rem;
+                font-size: 4rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.8rem;
+            }
+
+            .feature-card p {
+                font-size: 1rem;
+            }
+
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 2rem;
+                margin: 10% auto;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 0.9rem;
+            }
+
+            .hero-quote-badge {
+                font-size: 0.75rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .carousel-wrapper {
+                min-height: 350px;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-icon {
+                font-size: 3rem;
             }
 
             .feature-card h3 {
                 font-size: 1.5rem;
+            }
+
+            .feature-card p {
+                font-size: 0.9rem;
+            }
+
+            .carousel-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+
+            .carousel-controls {
+                gap: 1rem;
+            }
+
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .carousel-dot.active {
+                width: 24px;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .pricing-card {
+                padding: 1.5rem;
+            }
+
+            .plan-name {
+                font-size: 1.3rem;
+            }
+
+            .plan-price {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .close-modal {
+                font-size: 1.5rem;
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .carousel-wrapper {
+                min-height: 320px;
+            }
+
+            .feature-card {
+                padding: 1.2rem;
+            }
+
+            .feature-icon {
+                font-size: 2.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -683,7 +900,8 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1>極速、穩定<br>專業 Minecraft<br>伺服器託管</h1>
-                    <p>不僅僅是託管，更是您創意與展身手的地方。無論是 Minecraft 伺服器、個人網站還是反向代理，SpeedCloud 都能以免費、高速、穩定(應該)的姿態，滿足您的所有需求。</p>
+                    <div class="hero-quote-badge" id="randomQuote"></div>
+                    <p>打造屬於你的數位世界，從 SpeedCloud 開始！我們提供穩定快速的伺服器託管，讓你的創意無限延伸。</p>
                     <div class="cta-buttons">
                         <a href="https://dash.speedtw.cloud/dashboard" class="btn btn-primary">我來白嫖了！</a>
                         <a href="https://discord.gg/spwENUWj6r" class="btn btn-secondary" target="_blank">加入 Discord 群組</a>
@@ -702,7 +920,7 @@
             
             <div class="carousel-container">
                 <div class="carousel-wrapper" id="carouselWrapper">
-                    <div class="feature-card">
+                    <div class="feature-card active">
                         <div class="feature-icon">🇹🇼</div>
                         <h3>台灣機房</h3>
                         <p>伺服器位於台灣本地，提供極低延遲與穩定的連線品質，讓玩家享受流暢體驗。</p>
@@ -877,16 +1095,42 @@
     </div>
 
     <script>
-        // 載入提示
+        // 隨機小提示標語
+        const quotes = [
+            '恭喜你發現最棒的伺服器託管！',
+            '免費不代表陽春喔！',
+            '台灣機房，超低延遲！',
+            '用速度幣自由配置資源！',
+            'Discord 一鍵登入超方便！',
+            '準備好罐罐...呃，是準備好伺服器了！',
+            '穩定(應該)是我們的驕傲！',
+            '彈性付費，不浪費！'
+        ];
+
+        document.getElementById('randomQuote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+        // 載入提示 - 20種有趣的提示
         const tips = [
             '正在載入中...',
             '準備好罐罐了嗎？',
             '伺服器正在暖機中...',
-            '正在連接到速度雲...',
+            '正在召喚苦力怕...',
             '載入中，請稍候...',
             '馬上就好了！',
             '正在為您準備最佳體驗...',
-            '喵~正在啟動中...'
+            '喵~正在啟動中...',
+            '正在打開傳送門...',
+            '伺服器正在伸懶腰...',
+            '正在餵養伺服器小精靈...',
+            '檢查網路線有沒有被貓咬斷...',
+            '正在下載更多 RAM...',
+            '等等，我先喝口水...',
+            '伺服器剛睡醒，給它一點時間...',
+            '正在清理快取垃圾桶...',
+            '告訴伺服器不要緊張...',
+            '正在打掃虛擬機房...',
+            '插上電源線中...',
+            '載入速度比光速還快！（大概吧）'
         ];
 
         document.getElementById('loadingTip').textContent = tips[Math.floor(Math.random() * tips.length)];
@@ -919,10 +1163,10 @@
             });
         }
 
-        // 卡片輪播
+        // 卡片輪播 - 淡入淡出效果
         let currentSlide = 0;
         const totalSlides = 7;
-        const wrapper = document.getElementById('carouselWrapper');
+        const cards = document.querySelectorAll('.feature-card');
         const dotsContainer = document.getElementById('carouselDots');
 
         // 創建指示點
@@ -933,8 +1177,17 @@
             dotsContainer.appendChild(dot);
         }
 
+        // 初始化 - 顯示第一張卡片
+        cards[0].classList.add('active');
+
         function updateCarousel() {
-            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            // 移除所有卡片的 active 狀態
+            cards.forEach(card => card.classList.remove('active'));
+            
+            // 顯示當前卡片
+            cards[currentSlide].classList.add('active');
+            
+            // 更新指示點
             document.querySelectorAll('.carousel-dot').forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
@@ -954,6 +1207,12 @@
             currentSlide = (currentSlide + 1) % totalSlides;
             updateCarousel();
         };
+
+        // 自動輪播（可選）
+        // setInterval(() => {
+        //     currentSlide = (currentSlide + 1) % totalSlides;
+        //     updateCarousel();
+        // }, 5000);
 
         // 模態視窗
         function openModal(type) {
